@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +53,28 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+TINYMCE_JS_URL = "https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js";
+TINYMCE_COMPRESSOR = False;
+
+TINYMCE_DEFAULT_CONFIG = {
+    "theme":"silver",
+    "skin":"oxide",
+    "icons": "material",
+    "height": "80vh",
+    "width": "80vw",
+    "menubar": True,
+    "plugins": "advlist autolink lists link charmap print preview anchor searchreplace code save"
+    "fullscreen insertdatetime media table paste code help spellchecker",
+    "toolbar": "bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen save print | insertfile link codesample | "
+    "code",
+    "custom_undo_redo_levels": 10,
+    # "language": "es_ES",  # To force a specific language instead of the Django current language.
+}
+TINYMCE_SPELLCHECKER = True
 
 ROOT_URLCONF = 'voiceDictation.urls'
 

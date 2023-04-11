@@ -1,0 +1,14 @@
+{% extends "dictationTool/base.html" %}
+
+{% block title %}
+Dictation Pad
+{% endblock %}
+
+
+{% block main %}
+    <form method="post" action="">
+      {% csrf_token %}
+      {{ form.media }}
+      {{ form.as_p }}
+    </form>
+{% endblock %}
