@@ -1,5 +1,5 @@
 {% extends "dictationTool/base.html" %}
-
+{% load static %}
 {% block title %}
 Dictation Pad
 {% endblock %}
@@ -11,4 +11,11 @@ Dictation Pad
       {{ form.media }}
       {{ form.as_p }}
     </form>
+    <textarea id="results"></textarea>
+    <button type="button" id="startBtn">Start</button>
+    <button type="button" id="stopBtn">Stop</button>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'dictationTool/js/index.js' %}"></script>
 {% endblock %}
