@@ -22,26 +22,19 @@ startBtn.onclick = async ()=>{
 
   await navigator.mediaDevices.getUserMedia({audio:true})
   .then((stream)=>{
-    mediaRecorder = new MediaRecorder(stream,{mimeType : 'audio/webm', codecs : "opus"});
-    mediaRecorder.start(1000);
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start(10000);
     audioChunks = [];
 
     mediaRecorder.addEventListener("dataavailable", (ev)=>{
 //        console.log(ev.data);
         audioChunks.push(ev.data);
-//        var blob = new Blob(audioChunks, {'type':'audio/webm; codecs=opus'});
-//        console.log(blob);
-//        var data = new FormData();
-//        data.append('data', blob, 'audio_blob');
-
-        socket.send(JSON.stringify(
-        {
-            audioStream: "HI"
+        if (mediaRecorder.state === "inactive" || true){
+          var audioBlob = new Blob(audioChunks, {'type':'audio/webm'});
+          socket.send(audioBlob);
+          audioBlob = [];
         }
-        ));
-        audioChunks = [];
-    });
-
+      });
     mediaRecorder.onstop = function(){
       socket.close();
     }
