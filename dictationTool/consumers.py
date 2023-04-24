@@ -12,7 +12,9 @@ class AudioStream(WebsocketConsumer):
 
 	def receive(self, text_data):
 		text_data_json = json.loads(text_data)
-		audioStream = text_data_json['audioStream']
+		# self.audioData.append(text_data_json['audioStream'])
+		# print(text_data_json['audioStream'])
+		# audioStream = text_data_json['audioStream']
 		# try:
         #     # Convert blob stream to required audio stream
 		# 	result = "success"
