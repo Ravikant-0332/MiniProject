@@ -2,7 +2,7 @@ let mediaRecorder = NaN
 let startBtn = document.getElementById("startBtn");
 let stopBtn = document.getElementById("stopBtn");
 let audioChunks = [];
-//const socket = new WebSocket('ws://localhost:8000/ws/liveDictation/');
+
 
 startBtn.onclick = async ()=>{
   const socket = new WebSocket('ws://localhost:8000/ws/liveDictation/');
@@ -13,7 +13,10 @@ startBtn.onclick = async ()=>{
         tag = text.substr(1,pos-1);
         text = text.substr(pos+1);
         text = text.substr(0,text.length-pos-2);
-        tinymce.activeEditor.setContent("<" + tag + ">" + text + " " + result + "</" + tag + ">");
+        if(!tag || tag=="")
+          tinymce.activeEditor.setContent(text + " " + result);
+        else
+          tinymce.activeEditor.setContent("<" + tag + ">" + text + " " + result + "</" + tag + ">");
   }
 
   socket.onclose = (e) => {
@@ -23,16 +26,19 @@ startBtn.onclick = async ()=>{
   await navigator.mediaDevices.getUserMedia({audio:true})
   .then((stream)=>{
     mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.start(10000);
+    mediaRecorder.start(1000);
     audioChunks = [];
 
     mediaRecorder.addEventListener("dataavailable", (ev)=>{
-//        console.log(ev.data);
-        audioChunks.push(ev.data);
-        if (mediaRecorder.state === "inactive" || true){
-          var audioBlob = new Blob(audioChunks, {'type':'audio/webm'});
-          socket.send(audioBlob);
-          audioBlob = [];
+       console.log(ev.data);
+        // audioChunks.push(ev.data);
+        if (mediaRecorder.state === "inactive"){
+          // socket.send(ev.data);
+          audioChunks.push(ev.data);
+          blob = new Blob(audioChunks, { type: 'audio/wav' });
+
+          // socket.send(blob);
+          socket.send("IIIT Dharwad")
         }
       });
     mediaRecorder.onstop = function(){
